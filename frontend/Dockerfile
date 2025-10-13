@@ -1,11 +1,14 @@
-FROM node:18
-
+# Step 1: Build stage
+FROM node:18 AS build
 WORKDIR /app
-
 COPY . .
-
 RUN npm install
+RUN npm run build
 
+# Step 2: Serve stage
+FROM node:18
+RUN npm install -g serve
+WORKDIR /app
+COPY --from=build /app/build ./build
 EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "3000"]
