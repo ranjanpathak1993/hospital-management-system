@@ -35,3 +35,27 @@ app.get('/', (req, res) => {
 app.listen(3000, '0.0.0.0', () => {
   console.log('Server running on port 3000');
 });
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const { mongoURI } = require('./mongo-config'); // ← yeh import ho raha hai
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// MongoDB connect using config
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+// Routes
+const appointmentRoutes = require('./routes/appointments');
+app.use('/api/appointments', appointmentRoutes);
+
+app.listen(3001, () => {
+  console.log('Server running on port 3001');
+});
