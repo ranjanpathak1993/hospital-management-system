@@ -16,11 +16,15 @@ const transporter = nodemailer.createTransport({
 
 // Function to send email
 const sendEmail = async (email, reference) => {
-  await transporter.sendMail({
-    to: email,
-    subject: 'Appointment Confirmation',
-    text: `Your appointment is confirmed. Reference: ${reference}`
-  });
+  try {
+    await transporter.sendMail({
+      to: email,
+      subject: 'Appointment Confirmation',
+      text: `Your appointment is confirmed. Reference: ${reference}`
+    });
+  } catch (err) {
+    console.error('Email sending failed:', err);
+  }
 };
 
 // Twilio setup
@@ -28,11 +32,15 @@ const client = twilio('TWILIO_SID', 'TWILIO_AUTH_TOKEN'); // ← Replace with Tw
 
 // Function to send SMS
 const sendSMS = async (phone, reference) => {
-  await client.messages.create({
-    body: `Appointment confirmed. Ref: ${reference}`,
-    from: '+1234567890', // ← Replace with your Twilio number
-    to: phone
-  });
+  try {
+    await client.messages.create({
+      body: `Appointment confirmed. Ref: ${reference}`,
+      from: '+1234567890', // ← Replace with your Twilio number
+      to: phone
+    });
+  } catch (err) {
+    console.error('SMS sending failed:', err);
+  }
 };
 
 // POST route to create appointment
@@ -42,8 +50,12 @@ router.post('/', async (req, res) => {
     const appointment = new Appointment({ ...req.body, reference });
 
     await appointment.save(); // Save to MongoDB
-    await sendEmail(req.body.email, reference); // Send email
-    await sendSMS(req.body.phone, reference);   // Send SMS
+
+    // Send notifications
+    await Promise.all([
+      sendEmail(req.body.email, reference),
+      sendSMS(req.body.phone, reference)
+    ]);
 
     res.json({ success: true, reference });
   } catch (error) {
