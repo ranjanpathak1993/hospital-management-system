@@ -59,3 +59,5 @@ app.use('/api/appointments', appointmentRoutes);
 app.listen(3001, () => {
   console.log('Server running on port 3001');
 });
+const appointmentRoutes = require('./routes/appointments');
+app.use('/api/appointments', appointmentRoutes);
