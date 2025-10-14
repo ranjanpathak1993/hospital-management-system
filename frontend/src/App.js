@@ -4,7 +4,7 @@ function App() {
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    fetch('http://35.154.67.142:3001/api/doctors')
+    fetch('http://54.160.212.187:3001/api/doctors')
       .then(res => res.json())
       .then(data => setDoctors(data))
       .catch(err => console.error('Error fetching doctors:', err));
