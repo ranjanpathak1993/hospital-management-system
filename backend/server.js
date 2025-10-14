@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
   res.send('Hospital Management System Backend');
 });
 
-app.listen(3000, () => {
+// ✅ Bind to 0.0.0.0 for external access
+app.listen(3000, '0.0.0.0', () => {
   console.log('Server running on port 3000');
 });
