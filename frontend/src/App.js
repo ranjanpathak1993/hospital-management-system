@@ -4,7 +4,7 @@ function App() {
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    fetch('http://54.160.212.187:3001/api/doctors') // ✅ Correct IP here
+    fetch('http://54.160.212.187:3001/api/doctors')
       .then(res => res.json())
       .then(data => setDoctors(data))
       .catch(err => console.error('Error fetching doctors:', err));
