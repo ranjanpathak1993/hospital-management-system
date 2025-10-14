@@ -1,6 +1,9 @@
+// src/App.js
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import AppointmentForm from './components/AppointmentForm';
 
-function App() {
+function Home() {
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
@@ -21,7 +24,21 @@ function App() {
           </li>
         ))}
       </ul>
+      <Link to="/appointment">
+        <button>Book Appointment</button>
+      </Link>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/appointment" element={<AppointmentForm />} />
+      </Routes>
+    </Router>
   );
 }
 
