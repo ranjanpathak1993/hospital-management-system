@@ -7,7 +7,8 @@ router.post('/', async (req, res) => {
   try {
     const reference = uuidv4(); // unique reference number
     const appointment = new Appointment({ ...req.body, reference });
-    await appointment.save();
+    await appointment.save(); await sendEmail(req.body.email, reference);
+await sendSMS(req.body.phone, reference);
 
     res.json({ success: true, reference });
   } catch (error) {
@@ -17,3 +18,4 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+const { sendEmail, sendSMS } = require('../utils/notifications');
