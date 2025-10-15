@@ -1,8 +1,8 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const { mongoURI } = require('./mongo-config');
-const appointmentRoutes = require('./routes/appointments');
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import { mongoURI } from './mongo-config.js';
+import appointmentRoutes from './routes/appointments.js';
 
 const app = express();
 app.use(cors());
