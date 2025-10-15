@@ -1,9 +1,10 @@
-const express = require('express');
+import express from 'express';
+import { v4 as uuidv4 } from 'uuid';
+import nodemailer from 'nodemailer';
+import twilio from 'twilio';
+import Appointment from '../model/Appointment.js'; // Note: .js extension required
+
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
-const nodemailer = require('nodemailer');
-const twilio = require('twilio');
-const Appointment = require('../model/Appointment'); // Correct path
 
 // Gmail SMTP setup
 const transporter = nodemailer.createTransport({
@@ -64,4 +65,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
