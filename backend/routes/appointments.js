@@ -61,8 +61,4 @@ router.post('/', async (req, res) => {
     res.json({ success: true, reference });
   } catch (error) {
     console.error('Error saving appointment:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
-});
-
-export default router;
+    res.status(500).json({ success: false
